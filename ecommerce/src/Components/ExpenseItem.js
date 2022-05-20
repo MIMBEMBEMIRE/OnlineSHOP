@@ -1,21 +1,19 @@
 import "./ExpenseItem.css";
+import Card from "./Card";
 
-function ExpenseItem(){
-    return <div className="expense-item">
-<div>Marsh 28th 2021</div>
-<div className="expense-item__description">
-    <h2>
+function ExpenseItem(props)
+    {return <Card className="expense-item">
 
-        Car Insurance 
-    </h2>
-    <div className="expense-item__price">$2000.01</div>
+
+    <div className="expense-item__description">
+    <h2>{props.title}</h2>
+    <div className="expense-item__price">{props.amount}</div>
+
+
 
 </div>
 
-
-
-
-    </div>
+    </Card>
 
 }
 export default ExpenseItem;
