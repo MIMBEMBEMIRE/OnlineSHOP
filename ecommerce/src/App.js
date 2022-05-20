@@ -1,5 +1,6 @@
 import ExpenseItem from "./Components/ExpenseItem";
 import Card from "./Components/Card";
+import NewExpense from "./NewEXPENSE/NewExpense";
 
 function App (){
 
@@ -28,6 +29,7 @@ function App (){
 
 
     return <Card>
+    <NewExpense />
 
    
 return <ExpenseItem title={expenses[0].title} 
