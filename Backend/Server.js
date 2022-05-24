@@ -28,6 +28,13 @@ const productSchema = {
 const Product = mongoose.model("Product",productSchema)
 
 
+App.get(`${api}/products`, async(req,res)=>{
+    const productList = await Product.find({})
+    res.send(productList);
+})
+
+
+
 App.post(`${api}/products`,function(req,res){
 console.log(req.body.name);
 console.log(req.body.image);
@@ -43,8 +50,7 @@ product1.save().then((createdproduc=>{
     res.status(500).json({
         error:err,
         success:false
-
-    });
+});
 })
     
 })
