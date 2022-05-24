@@ -1,12 +1,19 @@
 require("dotenv/config");
 const express = require("express");
+const App = express();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const Product = require("./models/product");
+const api = process.env.API_URL;
+const productsRouter = require("./routers/product")
 
-const App = express();
+
+
+
 App.use(bodyParser.json());
 App.use(morgan("tiny"));
+App.use(`${api}/products`,productsRouter)
 
 mongoose.connect(process.env.CONNECTION_STRING,{dbName:"Wiki_DB"},function(err){
     if(!err){
@@ -18,42 +25,14 @@ mongoose.connect(process.env.CONNECTION_STRING,{dbName:"Wiki_DB"},function(err){
 });
 
 
-const api = process.env.API_URL;
-
-const productSchema = {
-    name:String,
-    image:String,
-    counInStock:Number
-};
-const Product = mongoose.model("Product",productSchema)
-
-
-App.get(`${api}/products`, async(req,res)=>{
-    const productList = await Product.find({})
-    res.send(productList);
-})
 
 
 
-App.post(`${api}/products`,function(req,res){
-console.log(req.body.name);
-console.log(req.body.image);
-    
-    const product1 = new Product({
-        name:req.body.name,
-        image:req.body.image,
-        counInStock:req.body.counInStock
-    })
-product1.save().then((createdproduc=>{
-    res.status(201).json(createdproduc) 
-})).catch((err)=>{
-    res.status(500).json({
-        error:err,
-        success:false
-});
-})
-    
-})
+
+
+
+
+
 
 
 
