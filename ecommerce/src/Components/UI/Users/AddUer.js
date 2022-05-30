@@ -2,12 +2,15 @@ import Card from "./Card";
 import classes from "./AddUser.module.css";
 import Button from "./Button";
 import {useState} from  "react";
+import EnrrModel from "./EnrrModel";
 
 
 
 const AddUser =(props)=>{
 const [enterUsername,setenterUsername] =useState('');
 const [enterAgename,setenterAgename] =useState('');
+const [error,setError] = useState()
+
 
 
 
@@ -15,10 +18,22 @@ const [enterAgename,setenterAgename] =useState('');
         event.preventDefault()
 
     if(enterUsername.trim().length ===0 || enterAgename.trim().length === 0){
+        setError({
+            title:"invalid input",
+            message:"please enter a valid name and age (non empty value)"
+            
+        })
         return 
 
     }
     if(+enterAgename <1){
+
+
+        setError({
+            title:"invalid age",
+            message:"please entr a valid age"
+            
+        })
         return
     }
 
@@ -37,9 +52,16 @@ const agenameChangeHander =(event)=>{
     setenterAgename(event.target.value)
 
 }
+const errorHander =() =>{
+    setError(null)
+}
 
 
-    return <Card className={classes.input}>
+    return <div>
+    { error && < EnrrModel  title={error.title} message={error.message} onConfirm={errorHander}/>}
+    
+    
+    <Card className={classes.input}>
     <form onSubmit={adduserHander}>
         <label htmlfor="usernaame">
             UserName
@@ -56,6 +78,7 @@ const agenameChangeHander =(event)=>{
 
         
         </Card>
+        </div>
 
     
 }
